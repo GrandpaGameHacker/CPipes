@@ -21,6 +21,13 @@ CPipeClient::CPipeClient(LPCSTR pipeName, DWORD pipeSize)
     m_pBuffer = (BYTE*) malloc(pipeSize);
     m_pipeName = PIPE_DIR;
     m_pipeName.append(pipeName);
+
+    if(m_pipeName.length() > MAX_PIPE_PATH)
+    {
+    	std::cout << "Error: pipe name too long." << std::endl;
+    	return;
+    }
+
     WaitNamedPipeA(m_pipeName.c_str(), NMPWAIT_WAIT_FOREVER);
     m_hPipe = CreateFileA(
         m_pipeName.c_str(),

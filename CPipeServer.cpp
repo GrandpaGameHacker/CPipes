@@ -9,6 +9,12 @@ CPipeServer::CPipeServer(LPCSTR pipeName, DWORD pipeSize)
     
     m_pipeName = PIPE_DIR;
     m_pipeName.append(pipeName);
+
+    if(m_pipeName.length() > MAX_PIPE_PATH)
+    {
+        std::cout << "Error: pipe name too long." << std::endl;
+        return;
+    }
     
     m_hPipe = CreateNamedPipeA(
         m_pipeName.c_str(),
